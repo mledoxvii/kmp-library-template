@@ -3,8 +3,11 @@ plugins {
     id("com.android.library")
     id("kotlin-android-extensions")
 }
+val projectVersion = "1.0.0"
+val projectVersionCode = 1
+
 group = "com.kmp.template"
-version = "1.0.0"
+version = projectVersion
 
 repositories {
     gradlePluginPortal()
@@ -44,8 +47,8 @@ android {
     defaultConfig {
         minSdkVersion(24)
         targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = projectVersionCode
+        versionName = projectVersion
     }
     buildTypes {
         getByName("release") {
