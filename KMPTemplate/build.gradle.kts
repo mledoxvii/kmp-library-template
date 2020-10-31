@@ -80,20 +80,32 @@ task("generateIosFramework") {
         val deviceFramework = "${binDir}/iosDevice/${buildType}Framework/${frameworkDir}"
         val oldDeviceFramework = "${binDir}/iosDeviceOld/${buildType}Framework/${frameworkDir}"
         val simulatorFramework = "${binDir}/iosSimulator/${buildType}Framework/${frameworkDir}"
-        val fatFramework = "${outDir}/${frameworkDir}"
+        val deviceFatFramework = "$binDir/iosDeviceFat/$frameworkDir"
         val deviceBinary = "${deviceFramework}/${frameworkName}"
         val oldDeviceBinary = "${oldDeviceFramework}/${frameworkName}"
-        val simulatorBinary = "${simulatorFramework}/${frameworkName}"
-        val fatBinary = "${fatFramework}/${frameworkName}"
+        val deviceFatBinary = "$deviceFatFramework/$frameworkName"
+        val xcFramework = "$outDir/$frameworkName.xcframework"
 
         copy {
             from(deviceFramework)
-            into(fatFramework)
+            into(deviceFatFramework)
         }
 
         exec {
             executable("sh")
-            args("-c", "lipo $simulatorBinary $deviceBinary $oldDeviceBinary -create -output $fatBinary")
+            args("-c", "lipo $deviceBinary $oldDeviceBinary -create -output $deviceFatBinary")
+        }
+
+        delete(outDir)
+
+        exec {
+            executable("xcodebuild")
+            args(
+                "-create-xcframework",
+                "-framework", simulatorFramework,
+                "-framework", deviceFatFramework,
+                "-output", xcFramework
+            )
         }
     }
 }
