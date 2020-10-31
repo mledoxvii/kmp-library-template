@@ -64,3 +64,36 @@ android {
         }
     }
 }
+
+task("generateIosFramework") {
+    val buildType = "release"
+
+    dependsOn("link${buildType.capitalize()}FrameworkIosDevice")
+    dependsOn("link${buildType.capitalize()}FrameworkIosDeviceOld")
+    dependsOn("link${buildType.capitalize()}FrameworkIosSimulator")
+
+    doLast {
+        val frameworkName = rootProject.name
+        val frameworkDir = "${frameworkName}.framework"
+        val outDir = "${buildDir.absolutePath}/outputs/ios"
+        val binDir = "${buildDir.absolutePath}/bin"
+        val deviceFramework = "${binDir}/iosDevice/${buildType}Framework/${frameworkDir}"
+        val oldDeviceFramework = "${binDir}/iosDeviceOld/${buildType}Framework/${frameworkDir}"
+        val simulatorFramework = "${binDir}/iosSimulator/${buildType}Framework/${frameworkDir}"
+        val fatFramework = "${outDir}/${frameworkDir}"
+        val deviceBinary = "${deviceFramework}/${frameworkName}"
+        val oldDeviceBinary = "${oldDeviceFramework}/${frameworkName}"
+        val simulatorBinary = "${simulatorFramework}/${frameworkName}"
+        val fatBinary = "${fatFramework}/${frameworkName}"
+
+        copy {
+            from(deviceFramework)
+            into(fatFramework)
+        }
+
+        exec {
+            executable("sh")
+            args("-c", "lipo $simulatorBinary $deviceBinary $oldDeviceBinary -create -output $fatBinary")
+        }
+    }
+}
