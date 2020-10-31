@@ -17,11 +17,19 @@ repositories {
 }
 kotlin {
     android()
-    iosX64("ios") {
+    iosX64("iosSimulator") {
         binaries {
-            framework {
-                baseName = "library"
-            }
+            framework()
+        }
+    }
+    iosArm64("iosDevice") {
+        binaries {
+            framework()
+        }
+    }
+    iosArm32("iosDeviceOld") {
+        binaries {
+            framework()
         }
     }
     sourceSets {
@@ -38,8 +46,8 @@ kotlin {
             }
         }
         val androidTest by getting
-        val iosMain by getting
-        val iosTest by getting
+        val iosSimulatorMain by getting
+        val iosSimulatorTest by getting
     }
 }
 android {
