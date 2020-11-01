@@ -33,3 +33,13 @@ group = "your.custom.group"
 ```xml
 <manifest ... package="your.custom.group.android">
 ```
+
+## iOS Architectures
+
+The project contains 3 iOS targets, one for each architecture with their own source folders:
+
+* `iosDeviceMain` / `iosDeviceMainTest`: For `arm64` architecture.
+* `iosDeviceOldMain` / `iosDeviceOldTest`: For `arm32` architecture.
+* `iosSimulatorMain` / `iosSimulatorTest`: For `x64` architecture.
+
+The `arm64` and `arm32` source folders are symlinks to the simulator's source folders. This way, they all share the same files, so adding or edditing files in one target will automatically be reflected in the others.
