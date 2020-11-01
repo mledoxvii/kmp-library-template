@@ -53,3 +53,9 @@ To generate the Android library execute the `Generate Android Release` run-confi
 ### iOS
 
 To generate the iOS framework execute the `Generate iOS Release` run-configuration. This executes the custom `generateIosFramework` gradle task, which bundles the different architectures frameworks into an `xcframework`. The output will be generated inside `build/outputs/ios` folder.
+
+## Unit Tests
+
+To run unit tests execute the `Unit Tests All` run-configuration. This executes the `check` gradle task, which you can use to execute them in a _CI_ environment.
+
+To only run tests from one of the platforms you can use the `Unit Tests Android` and `Unit Tests iOS` run-configurations.
