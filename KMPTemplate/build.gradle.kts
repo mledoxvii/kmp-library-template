@@ -45,7 +45,12 @@ kotlin {
                 implementation("androidx.core:core-ktx:1.2.0")
             }
         }
-        val androidTest by getting
+        val androidTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-junit"))
+            }
+        }
         val iosSimulatorMain by getting
         val iosSimulatorTest by getting
     }
