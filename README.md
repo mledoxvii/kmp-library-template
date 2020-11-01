@@ -43,3 +43,13 @@ The project contains 3 iOS targets, one for each architecture with their own sou
 * `iosSimulatorMain` / `iosSimulatorTest`: For `x64` architecture.
 
 The `arm64` and `arm32` source folders are symlinks to the simulator's source folders. This way, they all share the same files, so adding or edditing files in one target will automatically be reflected in the others.
+
+## Generate Libraries
+
+### Android
+
+To generate the Android library execute the `Generate Android Release` run-configuration. The library will be generated inside `build/outputs/aar` folder.
+
+### iOS
+
+To generate the iOS framework execute the `Generate iOS Release` run-configuration. This executes the custom `generateIosFramework` gradle task, which bundles the different architectures frameworks into an `xcframework`. The output will be generated inside `build/outputs/ios` folder.
